@@ -20,7 +20,7 @@ const customTextField = (props) => {
                 color="default"
                 style={{float: "right", marginTop: "10px"}}
                 onClick={() => props.buttonOnClick()}>
-                Save
+                Update
             </Button>
         </div>
     );
