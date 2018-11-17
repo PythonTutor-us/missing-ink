@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import classNames from 'classnames';
 import {withStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -11,11 +11,14 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import AssessmentIcon from '@material-ui/icons/Assessment';
+import DashboardIcon from '@material-ui/icons/Assessment';
 import WriterIcon from '@material-ui/icons/Create';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+
+import Dashboard from '../Dashboard/Dashboard';
+import Writer from '../Writer/Writer';
 
 const drawerWidth = 240;
 const styles = theme => ({
@@ -76,23 +79,14 @@ const styles = theme => ({
     },
     content: {
         flexGrow: 1,
+        height: '400px',
         padding: theme.spacing.unit * 3,
     },
 });
-const sideBarOrder = [
-    {
-        name: "Dashboard",
-        src: <AssessmentIcon />
-    },
-    {
-        name: "Writer",
-        src: <WriterIcon />
-    }
-];
 
-class MainLayout extends Component {
+class MainLayout extends PureComponent {
     state = {
-        selectedSection: "Dashbord",
+        selectedSection: "Dashboard",
         open: false,
     };
 
@@ -104,8 +98,25 @@ class MainLayout extends Component {
         this.setState({ open: false });
     };
 
+    handlePageChange = (currentPage) =>  {
+        this.setState({
+            selectedSection: currentPage
+        })
+    };
+
     render() {
         const { classes, theme } = this.props;
+
+        const sideBarOrder = [
+            {
+                name: "Dashboard",
+                src: <DashboardIcon onClick={() => this.handlePageChange("Dashboard")}/>
+            },
+            {
+                name: "Writer",
+                src: <WriterIcon onClick={() => this.handlePageChange("Writer")}/>
+            }
+        ];
 
         return (
             <div className={classes.root}>
@@ -164,7 +175,7 @@ class MainLayout extends Component {
                 </Drawer>
                 <main className={classes.content}>
                     <div className={classes.toolbar} />
-                    <p>I am a p tag</p>
+                    { this.state.selectedSection === "Dashboard" ? <Dashboard /> : <Writer />}
                 </main>
             </div>
         );
