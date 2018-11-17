@@ -35,7 +35,7 @@ from collections import defaultdict
 from spellchecker import SpellChecker
 import nltk
 
-input = "Thiss is my test inpaut string. This is myy test input string. This is another test input string to work onn".lower()
+input = "Thiss is my test inpaut string. This is myy test input string. This is another amaz ing test input string to work onn.".lower()
 input_tokenized = nltk.word_tokenize(input)
 
 print(input_tokenized)
@@ -87,21 +87,32 @@ for key, value in corrections_map.items():
     if key != 0:
         if len(spell.unknown([input_corrected[key-1] + value])) == 0:
             merge_map[key-1] = input_corrected[key-1] + value
+
 for key in merge_map:
     input_corrected[key] = input_corrected[key] + input_corrected[key + 1]
-    input_corrected.pop(key + 1)
+    input_corrected[key+1] = ""
     if key in corrections_map:
         corrections_map.pop(key)
     if key+1 in corrections_map:
         corrections_map.pop(key+1)
 
+
+
 print(corrections_map)
 
 for key, value in corrections_map.items():
-    corrections_map[key] = spell.correction(value)
+  corrections_map[key] = spell.correction(value)
 
 for key, value in corrections_map.items():
-    input_corrected[key] = corrections_map[key]
+  input_corrected[key] = corrections_map[key]
+
+
+i=0
+while i < len(input_corrected):
+    if input_corrected[i] == "":
+        input_corrected.pop(i)
+    i +=1
+
 
 print(input_corrected)
 
