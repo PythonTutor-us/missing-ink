@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {withStyles} from '@material-ui/core/styles';
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
 import MainLayout from './components/MainLayout/MainLayout';
@@ -25,4 +26,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default withStyles(theme, {withTheme: true})(App);
