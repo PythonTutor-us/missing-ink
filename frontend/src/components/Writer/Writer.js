@@ -4,44 +4,56 @@ import CustomTextField from '../CustomTextField/CustomTextField'
 
 class Writer extends Component {
     state = {
-        data: [
+        data: null,
+        selectFileIndex: null,
+    };
+
+    componentDidMount = () => {
+        const d = [
             {date: '20181101', count: 159, content: "asdfafasdfasfdasdf"},
             {date: '20181102', count: 123, content: "cvxbxcbxcvbxcvbxcvbxcvb"},
             {date: '20181103', count: 356, content: "asdfasdfafdadfasdfv"},
             {date: '20181104', count: 345, content: "rewtwertwertwetrwert"},
             {date: '20181105', count: 0, content: ""},
-        ],
-        selectFileIndex: null,
-        content: ""
+        ];
+        this.setState({
+            data: d,
+            selectFileIndex: d.length - 1
+        })
     };
 
     fileSelectHandler = (id) => {
-        this.setState({ selectFileIndex: id})
+        this.setState({selectFileIndex: id})
     };
 
-    saveBtnHandler = (text) => {
-        console.log('[Writer.js] text', text);
-        const tempData = [...this.state.data];
-        tempData[this.state.selectFileIndex].content = text;
+    saveBtnHandler = () => {
+    };
+
+    contentOnChange = (event) => {
+        console.log(event.target.value);
+        const tempData = {...this.state};
+        tempData.data[this.state.selectFileIndex].content = event.target.value;
 
         this.setState({
-            data: tempData
+            ...tempData
         })
     };
 
     render() {
         return (
             <div>
-                <FileExpansionPanel data={this.state.data} selected={this.fileSelectHandler}/>
-                { this.state.selectFileIndex !== null ? (
-                    <CustomTextField
-                        date={this.state.data[this.state.selectFileIndex].date}
-                        content={this.state.data[this.state.selectFileIndex].content}
-                        buttonOnClick={this.saveBtnHandler}/> ) : (
-                    <CustomTextField
-                        date={this.state.data[this.state.data.length - 1].date}
-                        content={this.state.data[this.state.data.length - 1].content}
-                        buttonOnClick={this.saveBtnHandler}/>)
+                {this.state.data === null ? (
+                    <p>Loading</p>
+                ) : (
+                    <div>
+                        <FileExpansionPanel data={this.state.data} selected={this.fileSelectHandler}/>
+                        <CustomTextField
+                            date={this.state.data[this.state.selectFileIndex].date}
+                            content={this.state.data[this.state.selectFileIndex].content}
+                            buttonOnClick={this.saveBtnHandler}
+                            handleOnChange={this.contentOnChange}/>
+                    </div>
+                )
                 }
             </div>
         );
