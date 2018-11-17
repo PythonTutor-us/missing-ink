@@ -34,11 +34,12 @@ if False:
 from collections import defaultdict
 from spellchecker import SpellChecker
 import nltk
+import json
 
-input = "Thiss is my test inpaut string. This is myy test input string. This is another amaz ing test input string to work onn.".lower()
+input = "Thiss is my test inpaut string. This is myy test input string. This is another amaz ing test inp ut string to work onn.".lower()
 input_tokenized = nltk.word_tokenize(input)
 
-print(input_tokenized)
+#print(input_tokenized)
 
 
 word_count = defaultdict(lambda: 0)
@@ -76,7 +77,7 @@ for i in range(len(input_corrected)):
     if len(spell.unknown([input_corrected[i]])) != 0:
         corrections_map[i] = next(iter(spell.unknown([input_corrected[i]])))
 
-print(corrections_map)
+#print(corrections_map)
 
 #Below will merge 2 words if they spell a word together
 merge_map = {}
@@ -98,7 +99,7 @@ for key in merge_map:
 
 
 
-print(corrections_map)
+#print(corrections_map)
 
 for key, value in corrections_map.items():
   corrections_map[key] = spell.correction(value)
@@ -114,8 +115,55 @@ while i < len(input_corrected):
     i +=1
 
 
+#print(input_corrected)
+
+
+
+
+
+#text = 'This is a table. We should table this offer. The table is in the center.'
+#text = nltk.word_tokenize(text)
+grammer_input = nltk.pos_tag(input_corrected)
+
+grammer_map = {}
+grammer_map2 = {}
+grammer_map_help = {"NN":"Noun","NNS":"Noun","NNP":"Noun","NNPS":"Noun","PRP":"Noun","JJ":"Adjective","JJR":"Adjective","JJS":"Adjective","VBD":"Verb","VBG":"Verb","VBN":"Verb"}
+
+for i in range(len(grammer_input)):
+    grammer_map[grammer_input[i][0]] = grammer_input[i][1]
+
+for key, value in grammer_map.items():
+    if value in grammer_map_help:
+        grammer_map2[key] = grammer_map_help[value]
+
+
+
+#print(grammer_map2)
+    #if value in word_map:
+    #    appearance_map[value].append(key)
+    #else:
+    #    appearance_map[value] = [key]
+
+
+
+#result = [i for i in result if i[0].lower() == 'table']
+
+print(word_count)
+print(word_map)
+
+print(corrections_map)
 print(input_corrected)
 
+print(grammer_map2)
+
+
+json.dumps(word_count)
+json.dumps(word_map)
+
+json.dumps(corrections_map)
+json.dumps(input_corrected)
+
+json.dumps(grammer_map2)
 
 
 '''
