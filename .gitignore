@@ -1,2 +1,6 @@
 venv/
 __pycache__/
+*.iml
+.idea/
+node_modules/
+*.egg-info/

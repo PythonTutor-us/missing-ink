@@ -7,11 +7,19 @@ def index():
 
 @app.route("/hello")
 def hello():
-    return "Hello Cruel World!"
+    return "Hello Hacker World!"
 
-@app.route("/user/<username>")
+@app.route('/user/<username>')
 def show_user_profile(username):
-    return "User {1} {0} {2}".format(username,"foo",username)
-def show_user_profile2(username):
-    return "User {1} {0} {2}".format(username,"foo",username)
+    # show the user profile for that user
+    return 'User {}'.format( username)
+
+@app.route("/d/<docid>/")
+def doc_edit(docid):
+    pass
+
+@app.route('/d/<docid>/update',methods=["POST","GET"])
+def doc_update(docid):
+    # show the user profile for that user
+    return 'User {}'.format( docid)
 
