@@ -11,7 +11,7 @@ class Writer extends Component {
             {date: '20181104', count: 345, content: "rewtwertwertwetrwert"},
             {date: '20181105', count: 0, content: ""},
         ],
-        selectFileIndex: this.state.data.length - 1,
+        selectFileIndex: null,
         content: ""
     };
 
@@ -30,16 +30,21 @@ class Writer extends Component {
     };
 
     render() {
-
         return (
             <div>
                 <FileExpansionPanel data={this.state.data} selected={this.fileSelectHandler}/>
-                <CustomTextField
-                    date={this.state.data[this.state.selectFileIndex].date}
-                    content={this.state.data[this.state.selectFileIndex].content}
-                    buttonOnClick={this.saveBtnHandler}/>
+                { this.state.selectFileIndex !== null ? (
+                    <CustomTextField
+                        date={this.state.data[this.state.selectFileIndex].date}
+                        content={this.state.data[this.state.selectFileIndex].content}
+                        buttonOnClick={this.saveBtnHandler}/> ) : (
+                    <CustomTextField
+                        date={this.state.data[this.state.data.length - 1].date}
+                        content={this.state.data[this.state.data.length - 1].content}
+                        buttonOnClick={this.saveBtnHandler}/>)
+                }
             </div>
-        )
+        );
     }
 }
 
